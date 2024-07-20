@@ -1,36 +1,47 @@
 <?php
 
 class User {
-    
-    public $name;
-    public $age;    
+    private $name;
+    private $age;
+
+    public function __construct($name , $age){
+        $this->name = $name;
+        $this->age = $age;
+    }
 
 
-    //runs when the obj is created!!
-public function __construct($name , $age){
+    // public function getName(){
+    //     return $this->name;
+    // }
 
-    //__CLASS__ ==> RETURNS THE NAME OF THE CLASS IM STANDING IN !
-    echo __CLASS__ . '  class <br>';
-    $this->name = $name;
-    $this->age = $age;
-}
+    // public function setName($name){
+    //     $this->name = $name;
+    // }
 
+    //__get MAGIC METHOD
 
+    public function __get($property){
+        if(property_exists($this , $property)){
+            return $this->$property;
+        }
+    }
 
-//called when no other refrences to a certain obj
-//used for cleanup, closing connections ,etc..
-public function __destruct(){
-    echo 'destruct...';
-}
-
-
-
-    public function sayHello(){
-        return 'Name : ' . $this->name . ' , '.'age : ' . $this->age . 'says hello' ;
+    public function __set($property , $value){
+        if(property_exists($this , $property)){
+            $this->$property = $value;
+        }
+        return $this;
     }
 }
 
-$user1 = new User('zainBondoq' , 21);
 
 
-echo $user1->name . ' is ' . $user1->age . ' years old <br>';
+$user1 = new User('John' , 40); // this withh thorw a fatal error thats why we need setters and getters
+
+$user1->__set('age' , 41);
+
+echo $user1->__get('name');
+echo $user1->__get('age');
+
+// echo $user1->setName('zain'); 
+// echo $user1->getName();
