@@ -1,37 +1,21 @@
 <?php
+  class User {
+    public $name;
+    public $age;
+    public static $minPassLength = 6;
 
-
-class User {
- 
-    protected $name = 'Brad';
-    protected $age;
-    
-    
-    public function __construct($name , $age) {
-        $this->name = $name;
-        $this->age = $age;
+    public static function validatePass($pass){
+      if(strlen($pass) >= self::$minPassLength){
+        return true;
+      } else {
+        return false;
+      }
     }
-}
+  }
 
-class Customer extends User{
-    private $balance;
-
-    public function __construct($name , $age ,$balance) {
-        parent::__construct($name , $age);
-        $this->balance = $balance;
-    }
-
-    public function pay($amount){
-        return $this->name .'paid $ ' . $amount;
-    }
-
-    public function getBalance(){
-        return $this->balance;
-    }
-
-}
-
-$customer1 = new Customer('ZAIN' , 250 ,500);
-//echo $customer1->pay(100);
-
-echo $customer1->getBalance();
+  $password = 'hello1';
+  if(User::validatePass($password)){
+    echo 'Password valid';
+  } else {
+    echo 'Password NOT valid';
+  }
